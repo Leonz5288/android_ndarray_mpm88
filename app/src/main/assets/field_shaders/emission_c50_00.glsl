@@ -8,13 +8,13 @@ const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void emission_c50_00()
 { // serial
-  int CDP = 0;
-  int CFN = int(0);
-  int CDR = CDP + 229416 * CFN; // S0
-  int CDS = CDR + 0; // S1
-  int CDU = CDS + 4 * CFN; // S1
-  int CDV = CDU + 0; // S2
-  int C = _data_i32_[CDV >> 2];
+  int CWk = 0;
+  int CYi = int(0);
+  int CWm = CWk + 229416 * CYi; // S0
+  int CWn = CWm + 0; // S1
+  int CWp = CWn + 4 * CYi; // S1
+  int CWq = CWp + 0; // S2
+  int C = _data_i32_[CWq >> 2];
   int D = 0;
   _gtmp_i32_[D >> 2] = C;
   int F = int(50);

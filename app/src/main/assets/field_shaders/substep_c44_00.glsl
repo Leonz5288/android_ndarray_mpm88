@@ -8,13 +8,13 @@ const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void substep_c44_00()
 { // serial
-  int BWD = 0;
-  int Cpv = int(0);
-  int BWF = BWD + 229416 * Cpv; // S0
-  int BWG = BWF + 0; // S1
-  int BWI = BWG + 4 * Cpv; // S1
-  int BWJ = BWI + 0; // S2
-  int C = _data_i32_[BWJ >> 2];
+  int Cf8 = 0;
+  int CI0 = int(0);
+  int Cfa = Cf8 + 229416 * CI0; // S0
+  int Cfb = Cfa + 0; // S1
+  int Cfd = Cfb + 4 * CI0; // S1
+  int Cfe = Cfd + 0; // S2
+  int C = _data_i32_[Cfe >> 2];
   int D = 0;
   _gtmp_i32_[D >> 2] = C;
 }

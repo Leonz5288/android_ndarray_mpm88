@@ -50,7 +50,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private int NDARRAY_NUM_PARTICLE = 4096;
     private final int NDARRAY_NUM_GRID = 64;
 
-    private final int SUBSTEP = 25;
+    private final int SUBSTEP = 50;
     private final String[] kernel_names = {"init", "substep", "init_obstacle", "emission"};
 
     private final int MAX_NUM_PARTICLE = 4096;

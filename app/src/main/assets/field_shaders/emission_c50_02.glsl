@@ -12,15 +12,15 @@ const float nan = 0.0f / 0.0f;
 void emission_c50_02()
 { // serial
   int AR = int(50);
-  int CF5 = 0;
-  int CGo = int(0);
-  int CF7 = CF5 + 229416 * CGo; // S0
-  int CF8 = CF7 + 0; // S1
-  int CFa = CF8 + 4 * CGo; // S1
-  int CFb = CFa + 0; // S2
-  int AS = _data_i32_[CFb >> 2];
+  int CXA = 0;
+  int CYT = int(0);
+  int CXC = CXA + 229416 * CYT; // S0
+  int CXD = CXC + 0; // S1
+  int CXF = CXD + 4 * CYT; // S1
+  int CXG = CXF + 0; // S2
+  int AS = _data_i32_[CXG >> 2];
   int AT = AS + AR;
-  _data_i32_[CFb >> 2] = AT;
+  _data_i32_[CXG >> 2] = AT;
 }
 
 void main()

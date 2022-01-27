@@ -5,7 +5,7 @@ layout(std430, binding = 0) buffer data_i32 { int _data_i32_[];};
 layout(std430, binding = 0) buffer data_f32 { float _data_f32_[];}; 
 layout(std430, binding = 1) buffer gtmp_i32 { int _gtmp_i32_[];}; 
 layout(std430, binding = 1) buffer gtmp_f32 { float _gtmp_f32_[];}; 
-float atomicAdd_data_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _data_i32_[addr]; new_val = floatBitsToInt((intBitsToFloat(old_val) + rhs)); } while (old_val != atomicCompSwap(_data_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); } float atomicSub_data_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _data_i32_[addr]; new_val = floatBitsToInt((intBitsToFloat(old_val) - rhs)); } while (old_val != atomicCompSwap(_data_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); } float atomicMax_data_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _data_i32_[addr]; new_val = floatBitsToInt(max(intBitsToFloat(old_val), rhs)); } while (old_val != atomicCompSwap(_data_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); } float atomicMin_data_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _data_i32_[addr]; new_val = floatBitsToInt(min(intBitsToFloat(old_val), rhs)); } while (old_val != atomicCompSwap(_data_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); }float atomicAdd_gtmp_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _gtmp_i32_[addr]; new_val = floatBitsToInt((intBitsToFloat(old_val) + rhs)); } while (old_val != atomicCompSwap(_gtmp_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); } float atomicSub_gtmp_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _gtmp_i32_[addr]; new_val = floatBitsToInt((intBitsToFloat(old_val) - rhs)); } while (old_val != atomicCompSwap(_gtmp_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); } float atomicMax_gtmp_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _gtmp_i32_[addr]; new_val = floatBitsToInt(max(intBitsToFloat(old_val), rhs)); } while (old_val != atomicCompSwap(_gtmp_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); } float atomicMin_gtmp_f32(int addr, float rhs) { int old_val, new_val, ret; do { old_val = _gtmp_i32_[addr]; new_val = floatBitsToInt(min(intBitsToFloat(old_val), rhs)); } while (old_val != atomicCompSwap(_gtmp_i32_[addr], old_val, new_val)); return intBitsToFloat(old_val); }
+
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void substep_c44_02()
@@ -16,20 +16,20 @@ void substep_c44_02()
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
       int Aq = _itv;
-      int BXm = 0;
-      int CpV = int(0);
-      int BXo = BXm + 229416 * CpV; // S0
-      int BXp = BXo + 65576; // S9
-      int Cf9 = int(4095);
-      int Cfa = Aq & Cf9;
-      int CpX = int(1);
-      int BXs = BXp + 8 * Cfa; // S9
-      int BXt = BXs + 0; // S10
-      float As = _data_f32_[BXt >> 2];
+      int CfR = 0;
+      int CIq = int(0);
+      int CfT = CfR + 229416 * CIq; // S0
+      int CfU = CfT + 65576; // S9
+      int CxE = int(4095);
+      int CxF = Aq & CxE;
+      int CIs = int(1);
+      int CfX = CfU + 8 * CxF; // S9
+      int CfY = CfX + 0; // S10
+      float As = _data_f32_[CfY >> 2];
       float At = float(64.0);
       float Au = As * At;
-      int BXD = BXs + 4; // S11
-      float Aw = _data_f32_[BXD >> 2];
+      int Cg8 = CfX + 4; // S11
+      float Aw = _data_f32_[Cg8 >> 2];
       float Ax = Aw * At;
       float Ay = float(0.5);
       float Az = Au - Ay;
@@ -61,37 +61,37 @@ void substep_c44_02()
       float AZ = AX * AX;
       float B0 = AY * Ay;
       float B1 = AZ * Ay;
-      int BXJ = BXo + 40; // S5
-      int BXM = BXJ + 4 * Cfa; // S5
-      int BXN = BXM + 0; // S6
-      float B3 = _data_f32_[BXN >> 2];
+      int Cge = CfT + 40; // S5
+      int Cgh = Cge + 4 * CxF; // S5
+      int Cgi = Cgh + 0; // S6
+      float B3 = _data_f32_[Cgi >> 2];
       float B4 = float(-0.625);
       float B5 = B3 * B4;
-      int BXT = BXo + 32808; // S20
-      int BXW = BXT + 4 * Cfa; // S20
-      int BXX = BXW + 0; // S21
-      float B7 = _data_f32_[BXX >> 2];
+      int Cgo = CfT + 32808; // S20
+      int Cgr = Cgo + 4 * CxF; // S20
+      int Cgs = Cgr + 0; // S21
+      float B7 = _data_f32_[Cgs >> 2];
       float B8 = B7 - AO;
       float B9 = B5 * B8;
       float Ba = float(4096.0);
       float Bb = B9 * Ba;
-      int BY3 = BXo + 16424; // S7
-      int BY6 = BY3 + 4 * Cfa; // S7
-      int BY7 = BY6 + 0; // S8
-      float Bd = _data_f32_[BY7 >> 2];
-      int BYd = BXo + 163880; // S15
-      int BYg = BYd + 16 * Cfa; // S15
-      int BYh = BYg + 0; // S16
-      float Bf = _data_f32_[BYh >> 2];
+      int Cgy = CfT + 16424; // S7
+      int CgB = Cgy + 4 * CxF; // S7
+      int CgC = CgB + 0; // S8
+      float Bd = _data_f32_[CgC >> 2];
+      int CgI = CfT + 163880; // S15
+      int CgL = CgI + 16 * CxF; // S15
+      int CgM = CgL + 0; // S16
+      float Bf = _data_f32_[CgM >> 2];
       float Bg = Bd * Bf;
-      int BYr = BYg + 4; // S17
-      float Bi = _data_f32_[BYr >> 2];
+      int CgW = CgL + 4; // S17
+      float Bi = _data_f32_[CgW >> 2];
       float Bj = Bd * Bi;
-      int BYB = BYg + 8; // S18
-      float Bl = _data_f32_[BYB >> 2];
+      int Ch6 = CgL + 8; // S18
+      float Bl = _data_f32_[Ch6 >> 2];
       float Bm = Bd * Bl;
-      int BYL = BYg + 12; // S19
-      float Bo = _data_f32_[BYL >> 2];
+      int Chg = CgL + 12; // S19
+      float Bo = _data_f32_[Chg >> 2];
       float Bp = Bd * Bo;
       float Bq = Bb + Bg;
       float Br = Bb + Bp;
@@ -102,285 +102,387 @@ void substep_c44_02()
       float Bw = Bt * Bv;
       float Bx = Bu * Bv;
       float By = AM * AN;
-      int BYR = BXo + 98344; // S12
-      int BYU = BYR + 8 * Cfa; // S12
-      int BYV = BYU + 0; // S13
-      float BA = _data_f32_[BYV >> 2];
-      float BB = Bd * BA;
-      int BZ5 = BYU + 4; // S14
-      float BD = _data_f32_[BZ5 >> 2];
-      float BE = Bd * BD;
-      float BF = Bq * Bw;
-      float BG = Bj * Bx;
-      float BH = BF + BG;
-      float BI = Bm * Bw;
-      float BJ = Br * Bx;
-      float BK = BI + BJ;
-      float BL = BB + BH;
-      float BM = BE + BK;
-      float BN = By * BL;
+      int Chm = CfT + 98344; // S12
+      int Chp = Chm + 8 * CxF; // S12
+      int Chq = Chp + 0; // S13
+      float BA = _data_f32_[Chq >> 2];
+      float BB = float(6.1035156e-05);
+      float BC = BA * BB;
+      int ChA = Chp + 4; // S14
+      float BE = _data_f32_[ChA >> 2];
+      float BF = BE * BB;
+      float BG = Bq * Bw;
+      float BH = Bj * Bx;
+      float BI = BG + BH;
+      float BJ = Bm * Bw;
+      float BK = Br * Bx;
+      float BL = BJ + BK;
+      float BM = BC + BI;
+      float BN = BF + BL;
       float BO = By * BM;
-      int BZc = BXo + 131112; // S22
-      int CfR = int(63);
-      int CfS = AB & CfR;
-      int CfW = AC & CfR;
-      int CB4 = int(6);
-      int CB5 = CfS << CB4;
-      int CqV = CfW + CB5;
-      int BZg = BZc + 8 * CqV; // S22
-      int BZh = BZg + 0; // S23
-      float BQ;
+      float BP = By * BN;
+      float BQ = float(16777216.0);
+      float BR = BO * BQ;
+      float BS = BP * BQ;
+      float BT = BR + Ay;
+      float BU = BS + Ay;
+      float BV = float(floor(BT));
+      float BW = float(floor(BU));
+      int BX = int(BV);
+      int BY = int(BW);
+      int ChH = CfT + 131112; // S22
+      int Cym = int(63);
+      int Cyn = AB & Cym;
+      int Cyr = AC & Cym;
+      int CTz = int(6);
+      int CTA = Cyn << CTz;
+      int CJq = Cyr + CTA;
+      int ChL = ChH + 8 * CJq; // S22
+      int ChM = ChL + 0; // S23
+      int C0;
       { // Begin Atomic Op
-      BQ = atomicAdd_data_f32(BZh >> 2, BN);
+      C0 = atomicAdd(_data_i32_[ChM >> 2], BX);
       } // End Atomic Op
-      int BZt = BZg + 4; // S24
-      float BS;
+      int ChY = ChL + 4; // S24
+      int C2;
       { // Begin Atomic Op
-      BS = atomicAdd_data_f32(BZt >> 2, BO);
+      C2 = atomicAdd(_data_i32_[ChY >> 2], BY);
       } // End Atomic Op
-      float BT = By * Bd;
-      int BZA = BXo + 49192; // S25
-      int BZE = BZA + 4 * CqV; // S25
-      int BZF = BZE + 0; // S26
-      float BV;
+      float C3 = float(67108864.0);
+      float C4 = By * C3;
+      float C5 = C4 + Ay;
+      float C6 = float(floor(C5));
+      int C7 = int(C6);
+      int Ci5 = CfT + 49192; // S25
+      int Ci9 = Ci5 + 4 * CJq; // S25
+      int Cia = Ci9 + 0; // S26
+      int C9;
       { // Begin Atomic Op
-      BV = atomicAdd_data_f32(BZF >> 2, BT);
+      C9 = atomicAdd(_data_i32_[Cia >> 2], C7);
       } // End Atomic Op
-      float BW = AO - AG;
-      float BX = BW * Bv;
-      float BY = AM * AV;
-      int C0 = AC + CpX;
-      float C1 = Bj * BX;
-      float C2 = BF + C1;
-      float C3 = Br * BX;
-      float C4 = BI + C3;
-      float C5 = BB + C2;
-      float C6 = BE + C4;
-      float C7 = BY * C5;
-      float C8 = BY * C6;
-      int Cgk = C0 & CfR;
-      int Crj = Cgk + CB5;
-      int BZQ = BZc + 8 * Crj; // S22
-      int BZR = BZQ + 0; // S23
-      float Ca;
+      float Ca = AO - AG;
+      float Cb = Ca * Bv;
+      float Cc = AM * AV;
+      int Ce = AC + CIs;
+      float Cf = Bj * Cb;
+      float Cg = BG + Cf;
+      float Ch = Br * Cb;
+      float Ci = BJ + Ch;
+      float Cj = BC + Cg;
+      float Ck = BF + Ci;
+      float Cl = Cc * Cj;
+      float Cm = Cc * Ck;
+      float Cn = Cl * BQ;
+      float Co = Cm * BQ;
+      float Cp = Cn + Ay;
+      float Cq = Co + Ay;
+      float Cr = float(floor(Cp));
+      float Cs = float(floor(Cq));
+      int Ct = int(Cr);
+      int Cu = int(Cs);
+      int CyP = Ce & Cym;
+      int CJO = CyP + CTA;
+      int Cil = ChH + 8 * CJO; // S22
+      int Cim = Cil + 0; // S23
+      int Cw;
       { // Begin Atomic Op
-      Ca = atomicAdd_data_f32(BZR >> 2, C7);
+      Cw = atomicAdd(_data_i32_[Cim >> 2], Ct);
       } // End Atomic Op
-      int C03 = BZQ + 4; // S24
-      float Cc;
+      int Ciy = Cil + 4; // S24
+      int Cy;
       { // Begin Atomic Op
-      Cc = atomicAdd_data_f32(C03 >> 2, C8);
+      Cy = atomicAdd(_data_i32_[Ciy >> 2], Cu);
       } // End Atomic Op
-      float Cd = BY * Bd;
-      int C0e = BZA + 4 * Crj; // S25
-      int C0f = C0e + 0; // S26
-      float Cf;
+      float Cz = Cc * C3;
+      float CA = Cz + Ay;
+      float CB = float(floor(CA));
+      int CC = int(CB);
+      int CiJ = Ci5 + 4 * CJO; // S25
+      int CiK = CiJ + 0; // S26
+      int CE;
       { // Begin Atomic Op
-      Cf = atomicAdd_data_f32(C0f >> 2, Cd);
+      CE = atomicAdd(_data_i32_[CiK >> 2], CC);
       } // End Atomic Op
-      float Cg = float(2.0);
-      float Ch = Cg - AG;
-      float Ci = Ch * Bv;
-      float Cj = AM * B1;
-      int Ck = int(2);
-      int Cl = AC + Ck;
-      float Cm = Bj * Ci;
-      float Cn = BF + Cm;
-      float Co = Br * Ci;
-      float Cp = BI + Co;
-      float Cq = BB + Cn;
-      float Cr = BE + Cp;
-      float Cs = Cj * Cq;
-      float Ct = Cj * Cr;
-      int CgI = Cl & CfR;
-      int CrH = CgI + CB5;
-      int C0q = BZc + 8 * CrH; // S22
-      int C0r = C0q + 0; // S23
-      float Cv;
+      float CF = float(2.0);
+      float CG = CF - AG;
+      float CH = CG * Bv;
+      float CI = AM * B1;
+      int CJ = int(2);
+      int CK = AC + CJ;
+      float CL = Bj * CH;
+      float CM = BG + CL;
+      float CN = Br * CH;
+      float CO = BJ + CN;
+      float CP = BC + CM;
+      float CQ = BF + CO;
+      float CR = CI * CP;
+      float CS = CI * CQ;
+      float CT = CR * BQ;
+      float CU = CS * BQ;
+      float CV = CT + Ay;
+      float CW = CU + Ay;
+      float CX = float(floor(CV));
+      float CY = float(floor(CW));
+      int CZ = int(CX);
+      int D0 = int(CY);
+      int Czd = CK & Cym;
+      int CKc = Czd + CTA;
+      int CiV = ChH + 8 * CKc; // S22
+      int CiW = CiV + 0; // S23
+      int D2;
       { // Begin Atomic Op
-      Cv = atomicAdd_data_f32(C0r >> 2, Cs);
+      D2 = atomicAdd(_data_i32_[CiW >> 2], CZ);
       } // End Atomic Op
-      int C0D = C0q + 4; // S24
-      float Cx;
+      int Cj8 = CiV + 4; // S24
+      int D4;
       { // Begin Atomic Op
-      Cx = atomicAdd_data_f32(C0D >> 2, Ct);
+      D4 = atomicAdd(_data_i32_[Cj8 >> 2], D0);
       } // End Atomic Op
-      float Cy = Cj * Bd;
-      int C0O = BZA + 4 * CrH; // S25
-      int C0P = C0O + 0; // S26
-      float CA;
+      float D5 = CI * C3;
+      float D6 = D5 + Ay;
+      float D7 = float(floor(D6));
+      int D8 = int(D7);
+      int Cjj = Ci5 + 4 * CKc; // S25
+      int Cjk = Cjj + 0; // S26
+      int Da;
       { // Begin Atomic Op
-      CA = atomicAdd_data_f32(C0P >> 2, Cy);
+      Da = atomicAdd(_data_i32_[Cjk >> 2], D8);
       } // End Atomic Op
-      float CB = AO - AE;
-      float CC = CB * Bv;
-      float CD = AU * AN;
-      int CE = AB + CpX;
-      float CF = Bq * CC;
-      float CG = CF + BG;
-      float CH = Bm * CC;
-      float CI = CH + BJ;
-      float CJ = BB + CG;
-      float CK = BE + CI;
-      float CL = CD * CJ;
-      float CM = CD * CK;
-      int Ch2 = CE & CfR;
-      int CB7 = Ch2 << CB4;
-      int Cs5 = CfW + CB7;
-      int C10 = BZc + 8 * Cs5; // S22
-      int C11 = C10 + 0; // S23
-      float CO;
+      float Db = AO - AE;
+      float Dc = Db * Bv;
+      float Dd = AU * AN;
+      int De = AB + CIs;
+      float Df = Bq * Dc;
+      float Dg = Df + BH;
+      float Dh = Bm * Dc;
+      float Di = Dh + BK;
+      float Dj = BC + Dg;
+      float Dk = BF + Di;
+      float Dl = Dd * Dj;
+      float Dm = Dd * Dk;
+      float Dn = Dl * BQ;
+      float Do = Dm * BQ;
+      float Dp = Dn + Ay;
+      float Dq = Do + Ay;
+      float Dr = float(floor(Dp));
+      float Ds = float(floor(Dq));
+      int Dt = int(Dr);
+      int Du = int(Ds);
+      int Czx = De & Cym;
+      int CTC = Czx << CTz;
+      int CKA = Cyr + CTC;
+      int Cjv = ChH + 8 * CKA; // S22
+      int Cjw = Cjv + 0; // S23
+      int Dw;
       { // Begin Atomic Op
-      CO = atomicAdd_data_f32(C11 >> 2, CL);
+      Dw = atomicAdd(_data_i32_[Cjw >> 2], Dt);
       } // End Atomic Op
-      int C1d = C10 + 4; // S24
-      float CQ;
+      int CjI = Cjv + 4; // S24
+      int Dy;
       { // Begin Atomic Op
-      CQ = atomicAdd_data_f32(C1d >> 2, CM);
+      Dy = atomicAdd(_data_i32_[CjI >> 2], Du);
       } // End Atomic Op
-      float CR = CD * Bd;
-      int C1o = BZA + 4 * Cs5; // S25
-      int C1p = C1o + 0; // S26
-      float CT;
+      float Dz = Dd * C3;
+      float DA = Dz + Ay;
+      float DB = float(floor(DA));
+      int DC = int(DB);
+      int CjT = Ci5 + 4 * CKA; // S25
+      int CjU = CjT + 0; // S26
+      int DE;
       { // Begin Atomic Op
-      CT = atomicAdd_data_f32(C1p >> 2, CR);
+      DE = atomicAdd(_data_i32_[CjU >> 2], DC);
       } // End Atomic Op
-      float CU = AU * AV;
-      float CV = CF + C1;
-      float CW = CH + C3;
-      float CX = BB + CV;
-      float CY = BE + CW;
-      float CZ = CU * CX;
-      float D0 = CU * CY;
-      int Cst = Cgk + CB7;
-      int C1A = BZc + 8 * Cst; // S22
-      int C1B = C1A + 0; // S23
-      float D2;
-      { // Begin Atomic Op
-      D2 = atomicAdd_data_f32(C1B >> 2, CZ);
-      } // End Atomic Op
-      int C1N = C1A + 4; // S24
-      float D4;
-      { // Begin Atomic Op
-      D4 = atomicAdd_data_f32(C1N >> 2, D0);
-      } // End Atomic Op
-      float D5 = CU * Bd;
-      int C1Y = BZA + 4 * Cst; // S25
-      int C1Z = C1Y + 0; // S26
-      float D7;
-      { // Begin Atomic Op
-      D7 = atomicAdd_data_f32(C1Z >> 2, D5);
-      } // End Atomic Op
-      float D8 = AU * B1;
-      float D9 = CF + Cm;
-      float Da = CH + Co;
-      float Db = BB + D9;
-      float Dc = BE + Da;
-      float Dd = D8 * Db;
-      float De = D8 * Dc;
-      int CsR = CgI + CB7;
-      int C2a = BZc + 8 * CsR; // S22
-      int C2b = C2a + 0; // S23
-      float Dg;
-      { // Begin Atomic Op
-      Dg = atomicAdd_data_f32(C2b >> 2, Dd);
-      } // End Atomic Op
-      int C2n = C2a + 4; // S24
-      float Di;
-      { // Begin Atomic Op
-      Di = atomicAdd_data_f32(C2n >> 2, De);
-      } // End Atomic Op
-      float Dj = D8 * Bd;
-      int C2y = BZA + 4 * CsR; // S25
-      int C2z = C2y + 0; // S26
-      float Dl;
-      { // Begin Atomic Op
-      Dl = atomicAdd_data_f32(C2z >> 2, Dj);
-      } // End Atomic Op
-      float Dm = Cg - AE;
-      float Dn = Dm * Bv;
-      float Do = B0 * AN;
-      int Dp = AB + Ck;
-      float Dq = Bq * Dn;
-      float Dr = Dq + BG;
-      float Ds = Bm * Dn;
-      float Dt = Ds + BJ;
-      float Du = BB + Dr;
-      float Dv = BE + Dt;
-      float Dw = Do * Du;
-      float Dx = Do * Dv;
-      int Cic = Dp & CfR;
-      int CB9 = Cic << CB4;
-      int Ctf = CfW + CB9;
-      int C2K = BZc + 8 * Ctf; // S22
-      int C2L = C2K + 0; // S23
-      float Dz;
-      { // Begin Atomic Op
-      Dz = atomicAdd_data_f32(C2L >> 2, Dw);
-      } // End Atomic Op
-      int C2X = C2K + 4; // S24
-      float DB;
-      { // Begin Atomic Op
-      DB = atomicAdd_data_f32(C2X >> 2, Dx);
-      } // End Atomic Op
-      float DC = Do * Bd;
-      int C38 = BZA + 4 * Ctf; // S25
-      int C39 = C38 + 0; // S26
-      float DE;
-      { // Begin Atomic Op
-      DE = atomicAdd_data_f32(C39 >> 2, DC);
-      } // End Atomic Op
-      float DF = B0 * AV;
-      float DG = Dq + C1;
-      float DH = Ds + C3;
-      float DI = BB + DG;
-      float DJ = BE + DH;
+      float DF = AU * AV;
+      float DG = Df + Cf;
+      float DH = Dh + Ch;
+      float DI = BC + DG;
+      float DJ = BF + DH;
       float DK = DF * DI;
       float DL = DF * DJ;
-      int CtD = Cgk + CB9;
-      int C3k = BZc + 8 * CtD; // S22
-      int C3l = C3k + 0; // S23
-      float DN;
+      float DM = DK * BQ;
+      float DN = DL * BQ;
+      float DO = DM + Ay;
+      float DP = DN + Ay;
+      float DQ = float(floor(DO));
+      float DR = float(floor(DP));
+      int DS = int(DQ);
+      int DT = int(DR);
+      int CKY = CyP + CTC;
+      int Ck5 = ChH + 8 * CKY; // S22
+      int Ck6 = Ck5 + 0; // S23
+      int DV;
       { // Begin Atomic Op
-      DN = atomicAdd_data_f32(C3l >> 2, DK);
+      DV = atomicAdd(_data_i32_[Ck6 >> 2], DS);
       } // End Atomic Op
-      int C3x = C3k + 4; // S24
-      float DP;
+      int Cki = Ck5 + 4; // S24
+      int DX;
       { // Begin Atomic Op
-      DP = atomicAdd_data_f32(C3x >> 2, DL);
+      DX = atomicAdd(_data_i32_[Cki >> 2], DT);
       } // End Atomic Op
-      float DQ = DF * Bd;
-      int C3I = BZA + 4 * CtD; // S25
-      int C3J = C3I + 0; // S26
-      float DS;
+      float DY = DF * C3;
+      float DZ = DY + Ay;
+      float E0 = float(floor(DZ));
+      int E1 = int(E0);
+      int Ckt = Ci5 + 4 * CKY; // S25
+      int Cku = Ckt + 0; // S26
+      int E3;
       { // Begin Atomic Op
-      DS = atomicAdd_data_f32(C3J >> 2, DQ);
+      E3 = atomicAdd(_data_i32_[Cku >> 2], E1);
       } // End Atomic Op
-      float DT = B0 * B1;
-      float DU = Dq + Cm;
-      float DV = Ds + Co;
-      float DW = BB + DU;
-      float DX = BE + DV;
-      float DY = DT * DW;
-      float DZ = DT * DX;
-      int Cu1 = CgI + CB9;
-      int C3U = BZc + 8 * Cu1; // S22
-      int C3V = C3U + 0; // S23
-      float E1;
+      float E4 = AU * B1;
+      float E5 = Df + CL;
+      float E6 = Dh + CN;
+      float E7 = BC + E5;
+      float E8 = BF + E6;
+      float E9 = E4 * E7;
+      float Ea = E4 * E8;
+      float Eb = E9 * BQ;
+      float Ec = Ea * BQ;
+      float Ed = Eb + Ay;
+      float Ee = Ec + Ay;
+      float Ef = float(floor(Ed));
+      float Eg = float(floor(Ee));
+      int Eh = int(Ef);
+      int Ei = int(Eg);
+      int CLm = Czd + CTC;
+      int CkF = ChH + 8 * CLm; // S22
+      int CkG = CkF + 0; // S23
+      int Ek;
       { // Begin Atomic Op
-      E1 = atomicAdd_data_f32(C3V >> 2, DY);
+      Ek = atomicAdd(_data_i32_[CkG >> 2], Eh);
       } // End Atomic Op
-      int C47 = C3U + 4; // S24
-      float E3;
+      int CkS = CkF + 4; // S24
+      int Em;
       { // Begin Atomic Op
-      E3 = atomicAdd_data_f32(C47 >> 2, DZ);
+      Em = atomicAdd(_data_i32_[CkS >> 2], Ei);
       } // End Atomic Op
-      float E4 = DT * Bd;
-      int C4i = BZA + 4 * Cu1; // S25
-      int C4j = C4i + 0; // S26
-      float E6;
+      float En = E4 * C3;
+      float Eo = En + Ay;
+      float Ep = float(floor(Eo));
+      int Eq = int(Ep);
+      int Cl3 = Ci5 + 4 * CLm; // S25
+      int Cl4 = Cl3 + 0; // S26
+      int Es;
       { // Begin Atomic Op
-      E6 = atomicAdd_data_f32(C4j >> 2, E4);
+      Es = atomicAdd(_data_i32_[Cl4 >> 2], Eq);
+      } // End Atomic Op
+      float Et = CF - AE;
+      float Eu = Et * Bv;
+      float Ev = B0 * AN;
+      int Ew = AB + CJ;
+      float Ex = Bq * Eu;
+      float Ey = Ex + BH;
+      float Ez = Bm * Eu;
+      float EA = Ez + BK;
+      float EB = BC + Ey;
+      float EC = BF + EA;
+      float ED = Ev * EB;
+      float EE = Ev * EC;
+      float EF = ED * BQ;
+      float EG = EE * BQ;
+      float EH = EF + Ay;
+      float EI = EG + Ay;
+      float EJ = float(floor(EH));
+      float EK = float(floor(EI));
+      int EL = int(EJ);
+      int EM = int(EK);
+      int CAH = Ew & Cym;
+      int CTE = CAH << CTz;
+      int CLK = Cyr + CTE;
+      int Clf = ChH + 8 * CLK; // S22
+      int Clg = Clf + 0; // S23
+      int EO;
+      { // Begin Atomic Op
+      EO = atomicAdd(_data_i32_[Clg >> 2], EL);
+      } // End Atomic Op
+      int Cls = Clf + 4; // S24
+      int EQ;
+      { // Begin Atomic Op
+      EQ = atomicAdd(_data_i32_[Cls >> 2], EM);
+      } // End Atomic Op
+      float ER = Ev * C3;
+      float ES = ER + Ay;
+      float ET = float(floor(ES));
+      int EU = int(ET);
+      int ClD = Ci5 + 4 * CLK; // S25
+      int ClE = ClD + 0; // S26
+      int EW;
+      { // Begin Atomic Op
+      EW = atomicAdd(_data_i32_[ClE >> 2], EU);
+      } // End Atomic Op
+      float EX = B0 * AV;
+      float EY = Ex + Cf;
+      float EZ = Ez + Ch;
+      float F0 = BC + EY;
+      float F1 = BF + EZ;
+      float F2 = EX * F0;
+      float F3 = EX * F1;
+      float F4 = F2 * BQ;
+      float F5 = F3 * BQ;
+      float F6 = F4 + Ay;
+      float F7 = F5 + Ay;
+      float F8 = float(floor(F6));
+      float F9 = float(floor(F7));
+      int Fa = int(F8);
+      int Fb = int(F9);
+      int CM8 = CyP + CTE;
+      int ClP = ChH + 8 * CM8; // S22
+      int ClQ = ClP + 0; // S23
+      int Fd;
+      { // Begin Atomic Op
+      Fd = atomicAdd(_data_i32_[ClQ >> 2], Fa);
+      } // End Atomic Op
+      int Cm2 = ClP + 4; // S24
+      int Ff;
+      { // Begin Atomic Op
+      Ff = atomicAdd(_data_i32_[Cm2 >> 2], Fb);
+      } // End Atomic Op
+      float Fg = EX * C3;
+      float Fh = Fg + Ay;
+      float Fi = float(floor(Fh));
+      int Fj = int(Fi);
+      int Cmd = Ci5 + 4 * CM8; // S25
+      int Cme = Cmd + 0; // S26
+      int Fl;
+      { // Begin Atomic Op
+      Fl = atomicAdd(_data_i32_[Cme >> 2], Fj);
+      } // End Atomic Op
+      float Fm = B0 * B1;
+      float Fn = Ex + CL;
+      float Fo = Ez + CN;
+      float Fp = BC + Fn;
+      float Fq = BF + Fo;
+      float Fr = Fm * Fp;
+      float Fs = Fm * Fq;
+      float Ft = Fr * BQ;
+      float Fu = Fs * BQ;
+      float Fv = Ft + Ay;
+      float Fw = Fu + Ay;
+      float Fx = float(floor(Fv));
+      float Fy = float(floor(Fw));
+      int Fz = int(Fx);
+      int FA = int(Fy);
+      int CMw = Czd + CTE;
+      int Cmp = ChH + 8 * CMw; // S22
+      int Cmq = Cmp + 0; // S23
+      int FC;
+      { // Begin Atomic Op
+      FC = atomicAdd(_data_i32_[Cmq >> 2], Fz);
+      } // End Atomic Op
+      int CmC = Cmp + 4; // S24
+      int FE;
+      { // Begin Atomic Op
+      FE = atomicAdd(_data_i32_[CmC >> 2], FA);
+      } // End Atomic Op
+      float FF = Fm * C3;
+      float FG = FF + Ay;
+      float FH = float(floor(FG));
+      int FI = int(FH);
+      int CmN = Ci5 + 4 * CMw; // S25
+      int CmO = CmN + 0; // S26
+      int FK;
+      { // Begin Atomic Op
+      FK = atomicAdd(_data_i32_[CmO >> 2], FI);
       } // End Atomic Op
   }
 }

@@ -8,12 +8,12 @@ const float nan = 0.0f / 0.0f;
 void init_c46_00()
 { // serial
   int B = int(0);
-  int CGy = 0;
-  int CGA = CGy + 229416 * B; // S0
-  int CGB = CGA + 0; // S1
-  int CGD = CGB + 4 * B; // S1
-  int CGE = CGD + 0; // S2
-  _data_i32_[CGE >> 2] = B;
+  int CZ3 = 0;
+  int CZ5 = CZ3 + 229416 * B; // S0
+  int CZ6 = CZ5 + 0; // S1
+  int CZ8 = CZ6 + 4 * B; // S1
+  int CZ9 = CZ8 + 0; // S2
+  _data_i32_[CZ9 >> 2] = B;
 }
 
 void main()

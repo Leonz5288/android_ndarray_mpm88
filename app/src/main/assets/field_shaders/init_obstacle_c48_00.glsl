@@ -15,24 +15,24 @@ void init_obstacle_c48_00()
       int C = int(1);
       int D = B << C;
       float F = float(0.0);
-      int CJy = 0;
-      int CMf = int(0);
-      int CJA = CJy + 229416 * CMf; // S0
-      int CJB = CJA + 8; // S27
-      int CLv = int(3);
-      int CLw = D & CLv;
-      int CJE = CJB + 8 * CLw; // S27
-      int CJF = CJE + 0; // S28
-      _data_f32_[CJF >> 2] = F;
-      int CJP = CJE + 4; // S29
-      _data_f32_[CJP >> 2] = F;
+      int D23 = 0;
+      int D4K = int(0);
+      int D25 = D23 + 229416 * D4K; // S0
+      int D26 = D25 + 8; // S27
+      int D40 = int(3);
+      int D41 = D & D40;
+      int D29 = D26 + 8 * D41; // S27
+      int D2a = D29 + 0; // S28
+      _data_f32_[D2a >> 2] = F;
+      int D2k = D29 + 4; // S29
+      _data_f32_[D2k >> 2] = F;
       int J = D + C;
-      int CLE = J & CLv;
-      int CJY = CJB + 8 * CLE; // S27
-      int CJZ = CJY + 0; // S28
-      _data_f32_[CJZ >> 2] = F;
-      int CK9 = CJY + 4; // S29
-      _data_f32_[CK9 >> 2] = F;
+      int D49 = J & D40;
+      int D2t = D26 + 8 * D49; // S27
+      int D2u = D2t + 0; // S28
+      _data_f32_[D2u >> 2] = F;
+      int D2E = D2t + 4; // S29
+      _data_f32_[D2E >> 2] = F;
   }
 }
 
