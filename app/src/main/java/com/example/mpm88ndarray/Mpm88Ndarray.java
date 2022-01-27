@@ -51,7 +51,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private final int NDARRAY_NUM_GRID = 64;
 
     private final int SUBSTEP = 25;
-    private final String[] kernel_names = {"init", "substep"};
+    private final String[] kernel_names = {"init", "substep", "init_obstacle", "emission"};
+
+    private final int MAX_NUM_PARTICLE = 4096;
 
     public Mpm88Ndarray(Context _context) {
         context = _context;
@@ -79,7 +81,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         if (!USE_NDARRAY) {
             // Field has fixed particle size, so we hack here for field version.
-            NDARRAY_NUM_PARTICLE = 8192;
+            NDARRAY_NUM_PARTICLE = 0;
         }
         // -----------------------------------------------------------------------------------------
         // Parse Json data.
@@ -102,6 +104,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             fillArgData(0);
         }
         init();
+        init_obstacle();
 
         startTime = System.nanoTime();
 
@@ -128,6 +131,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         if (SHOW_MAX_FPS) {
             for (int i = 0; i < 10000; i++) {
+                if (NDARRAY_NUM_PARTICLE + 50 <= MAX_NUM_PARTICLE) {
+                    emission();
+                    NDARRAY_NUM_PARTICLE += 50;
+                }
+
                 substep(SUBSTEP);
 
                 GLES32.glFlush();
@@ -138,6 +146,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 startTime = System.nanoTime();
             }
         } else {
+            if (NDARRAY_NUM_PARTICLE + 50 <= MAX_NUM_PARTICLE) {
+                emission();
+                NDARRAY_NUM_PARTICLE += 50;
+            }
+
             substep(SUBSTEP);
 
             render();
@@ -170,8 +183,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
     private void fillColorData() {
         // Fill color info into color buffer.
-        float[] data_v = new float[NDARRAY_NUM_PARTICLE *4];
-        for (int i = 0; i < NDARRAY_NUM_PARTICLE *4; i++) {
+        float[] data_v = new float[MAX_NUM_PARTICLE*4];
+        for (int i = 0; i < MAX_NUM_PARTICLE*4; i++) {
             data_v[i] = 0.9f;
         }
         color = ByteBuffer.allocateDirect(data_v.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -197,6 +210,25 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
         for (int i = 0; i < init_ndarrays.length; i++) {
             GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, init_ndarrays[i].getBind_idx(), 0);
+        }
+    }
+
+    private void init_obstacle() {
+        Kernel[] init_obstacle_kernel = programs[2].getKernels();
+        for (int i = 0; i < init_obstacle_kernel.length; i++) {
+            GLES32.glUseProgram(init_obstacle_kernel[i].getShader_program());
+            GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
+            GLES32.glDispatchCompute(init_obstacle_kernel[i].getNum_groups(), 1, 1);
+        }
+    }
+
+    private void emission() {
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
+        Kernel[] emission_kernel = programs[3].getKernels();
+        for (int i = 0; i < emission_kernel.length; i++) {
+            GLES32.glUseProgram(emission_kernel[i].getShader_program());
+            GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
+            GLES32.glDispatchCompute(emission_kernel[i].getNum_groups(), 1, 1);
         }
     }
 
@@ -234,7 +266,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         if (USE_NDARRAY) {
             GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
         } else {
-            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32768);
+            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 65576);
         }
 
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
@@ -312,7 +344,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                             num_groups *= shape[l];
                         }
                         num_groups = num_groups / gpu_block_size;
-                    } else {
+                    } else if (hint.isEmpty()) {
+                        num_groups = 32;
+                    } else{
                         num_groups = Integer.parseInt(hint) / gpu_block_size;
                     }
                 } else if (type.equals("serial")) {

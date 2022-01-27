@@ -6,20 +6,24 @@ layout(std430, binding = 1) buffer gtmp_i32 { int _gtmp_i32_[];};
 
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
-void substep_c44_00()
+void emission_c50_00()
 { // serial
-  int BWD = 0;
-  int Cpv = int(0);
-  int BWF = BWD + 229416 * Cpv; // S0
-  int BWG = BWF + 0; // S1
-  int BWI = BWG + 4 * Cpv; // S1
-  int BWJ = BWI + 0; // S2
-  int C = _data_i32_[BWJ >> 2];
+  int CDP = 0;
+  int CFN = int(0);
+  int CDR = CDP + 229416 * CFN; // S0
+  int CDS = CDR + 0; // S1
+  int CDU = CDS + 4 * CFN; // S1
+  int CDV = CDU + 0; // S2
+  int C = _data_i32_[CDV >> 2];
   int D = 0;
   _gtmp_i32_[D >> 2] = C;
+  int F = int(50);
+  int G = C + F;
+  int H = 4;
+  _gtmp_i32_[H >> 2] = G;
 }
 
 void main()
 {
-  substep_c44_00();
+  emission_c50_00();
 }
